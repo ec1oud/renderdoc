@@ -3403,11 +3403,12 @@ void GLPipelineStateViewer::exportHTML(QXmlStreamWriter &xml, const GLPipe::Fram
     xml.writeStartElement(tr("p"));
     xml.writeEndElement();
 
+    auto buf = fb.readFBO.readBuffer;
     m_Common.exportHTMLTable(xml,
                              {
                                  tr("Read Buffer"),
                              },
-                             {fb.readFBO.readBuffer});
+                             QVariantList() << buf);
   }
 }
 

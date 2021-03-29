@@ -363,7 +363,7 @@ bool CaptureContext::LoadExtension(rdcstr name)
   for(QAction *a : m_MainWindow->GetMenuActions())
     CleanMenu(a);
 
-  m_RegisteredMenuItems.removeAll(NULL);
+  m_RegisteredMenuItems.removeAll({});
 
   return ret;
 }

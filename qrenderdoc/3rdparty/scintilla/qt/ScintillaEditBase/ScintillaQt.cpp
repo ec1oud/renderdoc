@@ -24,7 +24,7 @@
 #include <QMenu>
 #include <QScrollBar>
 #include <QTimer>
-#include <QTextCodec>
+#include <QtCore5Compat/QTextCodec>
 
 #ifdef SCI_NAMESPACE
 using namespace Scintilla;

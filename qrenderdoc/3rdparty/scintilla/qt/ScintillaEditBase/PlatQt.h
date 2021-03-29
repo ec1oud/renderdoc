@@ -21,6 +21,8 @@
 namespace Scintilla {
 #endif
 
+class QTextCodec;
+
 const char *CharacterSetID(int characterSet);
 
 inline QColor QColorFromCA(ColourDesired ca)

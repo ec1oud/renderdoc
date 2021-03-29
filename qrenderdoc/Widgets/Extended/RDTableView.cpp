@@ -147,6 +147,17 @@ void RDTableView::setColumnGroupRole(int role)
   m_horizontalHeader->setColumnGroupRole(role);
 }
 
+QStyleOptionViewItem RDTableView::viewOptions() const
+{
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    return QTableView::viewOptions();
+#else
+    QStyleOptionViewItem ret;
+    initViewItemOption(&ret);
+    return ret;
+#endif
+}
+
 void RDTableView::setPinnedColumns(int numColumns)
 {
   m_pinnedColumns = numColumns;

@@ -58,7 +58,7 @@ public:
 
   void setColumnGroupRole(int role);
   int columnGroupRole() const { return m_columnGroupRole; }
-  QStyleOptionViewItem viewOptions() const override { return QTableView::viewOptions(); }
+  QStyleOptionViewItem viewOptions() const;
   void setPinnedColumns(int numColumns);
   int pinnedColumns() const { return m_pinnedColumns; }
 protected:

@@ -25,11 +25,10 @@
 #include <QAction>
 #include <QTime>
 #include <QMessageBox>
-#include <QTextCodec>
 #include <QListWidget>
 #include <QVarLengthArray>
 #include <QScrollBar>
-#include <QDesktopWidget>
+#include <QtCore5Compat/QTextCodec>
 #include <QTextLayout>
 #include <QTextLine>
 #include <QLibrary>
@@ -330,7 +329,7 @@ void SurfaceImpl::RoundedRectangle(PRectangle rc,
 {
 	PenColour(fore);
 	BrushColour(back);
-	GetPainter()->drawRoundRect(QRectFFromPRect(rc));
+        GetPainter()->drawRoundedRect(QRectFFromPRect(rc), 25, 25);
 }
 
 void SurfaceImpl::AlphaRectangle(PRectangle rc,
@@ -510,13 +509,13 @@ XYPOSITION SurfaceImpl::WidthText(Font &font, const char *s, int len)
 	QFontMetricsF metrics(*FontPointer(font), device);
 	SetCodec(font);
 	QString string = codec->toUnicode(s, len);
-	return metrics.width(string);
+        return metrics.horizontalAdvance(string);
 }
 
 XYPOSITION SurfaceImpl::WidthChar(Font &font, char ch)
 {
 	QFontMetricsF metrics(*FontPointer(font), device);
-	return metrics.width(QChar::fromLatin1(ch));
+        return metrics.horizontalAdvance(QChar::fromLatin1(ch));
 }
 
 XYPOSITION SurfaceImpl::Ascent(Font &font)
@@ -651,9 +650,12 @@ void Window::SetPositionRelative(PRectangle rc, Window relativeTo)
 	ox += rc.left;
 	oy += rc.top;
 
-	QDesktopWidget *desktop = QApplication::desktop();
-	QRect rectDesk = desktop->availableGeometry(QPoint(ox, oy));
-	/* do some corrections to fit into screen */
+        auto screen = QGuiApplication::screenAt(QPoint(ox, oy));
+        if (!screen)
+            screen = qGuiApp->primaryScreen();
+        QRect rectDesk = screen->availableGeometry();
+
+        /* do some corrections to fit into screen */
 	int sizex = rc.right - rc.left;
 	int sizey = rc.bottom - rc.top;
 	int screenWidth = rectDesk.width();
@@ -738,8 +740,7 @@ PRectangle Window::GetMonitorRect(Point pt)
 {
 	QPoint originGlobal = window(wid)->mapToGlobal(QPoint(0, 0));
 	QPoint posGlobal = window(wid)->mapToGlobal(QPoint(pt.x, pt.y));
-	QDesktopWidget *desktop = QApplication::desktop();
-	QRect rectScreen = desktop->availableGeometry(posGlobal);
+        QRect rectScreen = QGuiApplication::screenAt(posGlobal)->availableGeometry();
 	rectScreen.translate(-originGlobal.x(), -originGlobal.y());
 	return PRectangle(rectScreen.left(), rectScreen.top(),
 	        rectScreen.right(), rectScreen.bottom());
@@ -1080,7 +1081,8 @@ void ListWidget::mouseDoubleClickEvent(QMouseEvent * /* event */)
 
 QStyleOptionViewItem ListWidget::viewOptions() const
 {
-	QStyleOptionViewItem result = QListWidget::viewOptions();
+        QStyleOptionViewItem result;
+        initViewItemOption(&result);
 	result.state |= QStyle::State_Active;
 	return result;
 }

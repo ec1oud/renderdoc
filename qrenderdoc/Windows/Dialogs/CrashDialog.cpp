@@ -25,7 +25,6 @@
 #include "CrashDialog.h"
 #include <QApplication>
 #include <QDateTime>
-#include <QDesktopWidget>
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QHttpMultiPart>
@@ -442,7 +441,7 @@ void CrashDialog::sendReport()
   multiPart->setParent(m_Request);
 
   QObject::connect(
-      m_Request, OverloadedSlot<QNetworkReply::NetworkError>::of(&QNetworkReply::error),
+      m_Request, OverloadedSlot<QNetworkReply::NetworkError>::of(&QNetworkReply::errorOccurred),
       [this](QNetworkReply::NetworkError err) {
         ui->progressBar->setValue(0);
         ui->progressText->setText(tr("Network error uploading:\n%1").arg(m_Request->errorString()));

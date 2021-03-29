@@ -155,7 +155,7 @@ public:
   Qt::ItemFlags flags(const QModelIndex &index) const override
   {
     if(!index.isValid())
-      return 0;
+      return Qt::NoItemFlags;
 
     return QAbstractItemModel::flags(index) | Qt::ItemIsUserCheckable;
   }
@@ -313,8 +313,8 @@ void RDTreeWidgetItem::sort(int column, Qt::SortOrder order)
 {
   std::sort(m_children.begin(), m_children.end(),
             [column, order](const RDTreeWidgetItem *a, const RDTreeWidgetItem *b) {
-              QVariant va = a->data(column, Qt::DisplayRole);
-              QVariant vb = b->data(column, Qt::DisplayRole);
+              auto va = a->data(column, Qt::DisplayRole).toString();
+              auto vb = b->data(column, Qt::DisplayRole).toString();
 
               if(order == Qt::AscendingOrder)
                 return va < vb;
@@ -871,8 +871,8 @@ void RDTreeWidget::itemDataChanged(RDTreeWidgetItem *item, int column, int role)
     if(m_lowestIndex.first == -1)
     {
       m_queuedItem = item;
-      m_lowestIndex = qMakePair<int, int>(row, 0);
-      m_highestIndex = qMakePair<int, int>(m_lowestIndex.first, m_headers.count() - 1);
+      m_lowestIndex = qMakePair(row, 0);
+      m_highestIndex = qMakePair(m_lowestIndex.first, m_headers.count() - 1);
     }
     else
     {

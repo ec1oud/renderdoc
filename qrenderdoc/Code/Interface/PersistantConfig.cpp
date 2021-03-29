@@ -263,7 +263,7 @@ void PersistantConfig::applyValues(const QVariantMap &values)
       if(settings.contains(lit("shader.debug.searchPaths")))
       {
         QStringList searchPaths = settings[lit("shader.debug.searchPaths")].toString().split(
-            QLatin1Char(';'), QString::SkipEmptyParts);
+            QLatin1Char(';'), Qt::SkipEmptyParts);
 
         SDObject *debug = RENDERDOC_SetConfigSetting("DXBC.Debug.SearchDirPaths");
 

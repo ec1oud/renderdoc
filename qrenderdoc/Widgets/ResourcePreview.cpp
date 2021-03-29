@@ -35,8 +35,8 @@ ResourcePreview::ResourcePreview(ICaptureContext &c, IReplayOutput *output, QWid
   ui->thumbnail->SetContext(c);
   ui->thumbnail->SetOutput(output);
 
-  setBackgroundRole(QPalette::Background);
-  setForegroundRole(QPalette::Foreground);
+  setBackgroundRole(QPalette::Window);
+  setForegroundRole(QPalette::WindowText);
 
   QPalette Pal(palette());
 
@@ -48,13 +48,13 @@ ResourcePreview::ResourcePreview(ICaptureContext &c, IReplayOutput *output, QWid
 
   ui->slotLabel->setPalette(palette());
   ui->slotLabel->setBackgroundRole(QPalette::Dark);
-  ui->slotLabel->setForegroundRole(QPalette::Foreground);
+  ui->slotLabel->setForegroundRole(QPalette::WindowText);
   ui->slotLabel->setAutoFillBackground(true);
   ui->slotLabel->setFont(Formatter::PreferredFont());
   ui->descriptionLabel->setPalette(palette());
   ui->descriptionLabel->setAutoFillBackground(true);
   ui->descriptionLabel->setBackgroundRole(QPalette::Dark);
-  ui->descriptionLabel->setForegroundRole(QPalette::Foreground);
+  ui->descriptionLabel->setForegroundRole(QPalette::WindowText);
   ui->descriptionLabel->setFont(Formatter::PreferredFont());
 
   QObject::connect(ui->thumbnail, &CustomPaintWidget::clicked, this, &ResourcePreview::clickEvent);
@@ -105,7 +105,7 @@ void ResourcePreview::setSelected(bool sel)
 {
   m_Selected = sel;
 
-  setForegroundRole(sel ? QPalette::Highlight : QPalette::Foreground);
+  setForegroundRole(sel ? QPalette::Highlight : QPalette::WindowText);
 }
 
 WindowingData ResourcePreview::GetWidgetWindowingData()

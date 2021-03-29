@@ -136,7 +136,7 @@ void RDTipLabel::paintEvent(QPaintEvent *ev)
 {
   QStylePainter p(this);
   QStyleOptionFrame opt;
-  opt.init(this);
+  opt.initFrom(this);
   p.drawPrimitive(QStyle::PE_PanelTipLabel, opt);
   p.end();
 
@@ -173,7 +173,7 @@ void RDTipLabel::resizeEvent(QResizeEvent *e)
 {
   QStyleHintReturnMask frameMask;
   QStyleOption option;
-  option.init(this);
+  option.initFrom(this);
   if(style()->styleHint(QStyle::SH_ToolTip_Mask, &option, this, &frameMask))
     setMask(frameMask.region);
 
@@ -210,7 +210,7 @@ void RDTreeView::mouseMoveEvent(QMouseEvent *e)
 void RDTreeView::wheelEvent(QWheelEvent *e)
 {
   QTreeView::wheelEvent(e);
-  m_currentHoverIndex = indexAt(e->pos());
+  m_currentHoverIndex = indexAt(e->position().toPoint());
 }
 
 void RDTreeView::leaveEvent(QEvent *e)
@@ -503,8 +503,8 @@ void RDTreeView::drawRow(QPainter *painter, const QStyleOptionViewItem &options,
   {
     QPen p = painter->pen();
 
-    QColor back = options.palette.color(QPalette::Active, QPalette::Background);
-    QColor fore = options.palette.color(QPalette::Active, QPalette::Foreground);
+    QColor back = options.palette.color(QPalette::Active, QPalette::Window);
+    QColor fore = options.palette.color(QPalette::Active, QPalette::WindowText);
 
     // draw the grid lines with a colour half way between background and foreground
     painter->setPen(QPen(QColor::fromRgbF(back.redF() * 0.8 + fore.redF() * 0.2,
@@ -622,7 +622,8 @@ void RDTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModel
     if(model()->rowCount(index) == 0)
       return;
 
-    QStyleOptionViewItem branchopt = viewOptions();
+    QStyleOptionViewItem branchopt;
+    initViewItemOption(&branchopt);
 
     branchopt.rect = primitive;
 

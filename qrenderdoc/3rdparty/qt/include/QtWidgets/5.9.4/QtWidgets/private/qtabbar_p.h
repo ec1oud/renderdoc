@@ -281,7 +281,7 @@ public:
     QSize sizeHint() const Q_DECL_OVERRIDE;
     QSize minimumSizeHint() const Q_DECL_OVERRIDE
         { return sizeHint(); }
-    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void enterEvent(QEnterEvent *event) Q_DECL_OVERRIDE;
     void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 };

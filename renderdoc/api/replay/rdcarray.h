@@ -792,6 +792,7 @@ public:
     return *this;
   }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   rdcarray(const QVector<T> &in)
   {
     elems = NULL;
@@ -815,6 +816,7 @@ public:
 
     return *this;
   }
+#endif
 #endif
 };
 

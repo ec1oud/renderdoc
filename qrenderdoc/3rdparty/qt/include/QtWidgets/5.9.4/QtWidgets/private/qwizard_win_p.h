@@ -75,7 +75,7 @@ public:
     inline QSize minimumSizeHint() const
     { return sizeHint(); }
 
-    void enterEvent(QEvent *event);
+    void enterEvent(QEnterEvent *event);
     void leaveEvent(QEvent *event);
     void paintEvent(QPaintEvent *event);
 };

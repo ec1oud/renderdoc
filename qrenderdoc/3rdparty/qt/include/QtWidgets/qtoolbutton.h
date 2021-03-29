@@ -112,7 +112,7 @@ protected:
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
     void actionEvent(QActionEvent *) Q_DECL_OVERRIDE;
 
-    void enterEvent(QEvent *) Q_DECL_OVERRIDE;
+    void enterEvent(QEnterEvent *) Q_DECL_OVERRIDE;
     void leaveEvent(QEvent *) Q_DECL_OVERRIDE;
     void timerEvent(QTimerEvent *) Q_DECL_OVERRIDE;
     void changeEvent(QEvent *) Q_DECL_OVERRIDE;

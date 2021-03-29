@@ -208,7 +208,7 @@ void PerformanceCounterViewer::CaptureCounters()
       TimeUnit timeunit = m_Ctx.Config().EventBrowser_TimeUnit;
       for(const CounterDescription &cd : counterDescriptions)
       {
-        QString unit = QString::null;
+        QString unit;
         switch(cd.unit)
         {
           case CounterUnit::Bytes: unit = lit("bytes"); break;

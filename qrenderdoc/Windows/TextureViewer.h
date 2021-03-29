@@ -25,6 +25,7 @@
 #pragma once
 
 #include <QDir>
+#include <QElapsedTimer>
 #include <QFrame>
 #include <QMenu>
 #include <QMouseEvent>
@@ -235,7 +236,7 @@ private slots:
   void channelsWidget_toggled(bool checked) { UI_UpdateChannels(); }
   void channelsWidget_selected(int index) { UI_UpdateChannels(); }
 protected:
-  void enterEvent(QEvent *event) override;
+  void enterEvent(QEnterEvent *event) override;
   void showEvent(QShowEvent *event) override;
 
 private:
@@ -362,7 +363,7 @@ private:
   rdcarray<BoundResourceArray> m_ReadOnlyResources[(uint32_t)ShaderStage::Count];
   rdcarray<BoundResourceArray> m_ReadWriteResources[(uint32_t)ShaderStage::Count];
 
-  QTime m_CustomShaderTimer;
+  QElapsedTimer m_CustomShaderTimer;
   int m_CustomShaderWriteTime = 0;
 
   QFileSystemWatcher *m_Watcher = NULL;
